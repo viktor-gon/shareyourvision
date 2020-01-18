@@ -160,8 +160,8 @@ const moveDeltaXY = (deltaX, deltaY) => {
   });  
 }
 
-//const browser = 'google-chrome';
-const browser = 'chromium-browser';
+const browser = 'google-chrome';
+//const browser = 'chromium-browser';
 
 const openURL = url => {
 exec(`${browser} --incognito --new-window --start-fullscreen ${url}`, (err, stdout, stderr) => {
