@@ -58,11 +58,11 @@ app.post('/', (req, res) => {
   }
 
   if (cmd === cmdType.PAGE_UP) {     
-    pageUp();
+    pageDown();
   }  
 
-  if (cmd === cmdType.PAGE_DOWN) {      
-    pageDown();
+  if (cmd === cmdType.PAGE_DOWN) {          
+    pageUp();
   }    
 
   return res.send('done:' + cmd);
