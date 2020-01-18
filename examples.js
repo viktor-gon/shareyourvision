@@ -1,3 +1,7 @@
+// install:
+
+apt-get install xdotool
+
 //types : OPEN_URL, CONTROL
 const cmdType = {
     TYPE_TEXT: "TYPE_TEXT",

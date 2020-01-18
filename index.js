@@ -8,19 +8,6 @@ const cmdType = {
   OPEN_URL: "OPEN_URL",
 }
 
-// EXAMPLES
-// {
-// 	"cmd":"CONTROL",
-// 	"deltaX": "10",
-// 	"deltaY": "10",
-//  "click":  1,
-// }
-
-// {      
-//     cmd: "OPEN_URL",  
-//     url: 'google.com'
-// }
-
 const { exec } = require('child_process');
 
 const cors = require('cors');
@@ -48,7 +35,7 @@ app.get('/', (req, res) => {
 app.post('/', (req, res) => {    
   const {cmd, url} = req.body;
 
-  console.log('post:', req.body, cmd);
+  //console.log('post:', req.body, cmd);
 
   if (cmd === cmdType.CONTROL) {
     const {deltaX, deltaY, click} = req.body;
@@ -151,7 +138,7 @@ const moveDeltaXY = (deltaX, deltaY) => {
     cursorPosY = 0;
   }
 
-  console.log(cursorPosX, cursorPosY);
+  //console.log(cursorPosX, cursorPosY);
   
   exec(`xdotool mousemove ${cursorPosX} ${cursorPosY}`, (err, stdout, stderr) => {
     if (err) {
@@ -161,24 +148,14 @@ const moveDeltaXY = (deltaX, deltaY) => {
   });  
 }
 
+//const browser = 'google-chrome';
+const browser = 'chromium-browser';
+
 const openURL = url => {
-exec(`google-chrome --incognito --new-window --start-fullscreen ${url}`, (err, stdout, stderr) => {
+exec(`${browser} --incognito --new-window --start-fullscreen ${url}`, (err, stdout, stderr) => {
     if (err) {
       // node couldn't execute the command
       return;
     }     
   });  
 }
-
-// const app = "data:text/html,<html><body><script>window.moveTo(580,240);window.resizeTo(800,600);window.location='https://sinoptik.ua/';</script></body></html>";
-
-// exec(`google-chrome --incognito --new-window`, (err, stdout, stderr) => {
-//     if (err) {
-//       // node couldn't execute the command
-//       return;
-//     }
-  
-//     // the *entire* stdout and stderr (buffered)
-//     console.log(`stdout: ${stdout}`);
-//     console.log(`stderr: ${stderr}`);
-//   });
