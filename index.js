@@ -1,5 +1,5 @@
 
-//type : OPEN_URL, CONTROL
+//Control types
 const cmdType = {
   TYPE_TEXT: "TYPE_TEXT",
   PAGE_UP: "PAGE_UP",
@@ -11,7 +11,6 @@ const cmdType = {
 const { exec } = require('child_process');
 
 const cors = require('cors');
-// const bodyParser = require('body-parser');
 const express = require('express');
 const app = express();
 
@@ -58,13 +57,11 @@ app.post('/', (req, res) => {
     typeText(char);
   }
 
-  if (cmd === cmdType.PAGE_UP) {  
-    //const {char} = req.body;
+  if (cmd === cmdType.PAGE_UP) {     
     pageUp();
   }  
 
-  if (cmd === cmdType.PAGE_DOWN) {  
-    //const {char} = req.body;
+  if (cmd === cmdType.PAGE_DOWN) {      
     pageDown();
   }    
 
@@ -73,9 +70,8 @@ app.post('/', (req, res) => {
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
+  getMousePosition();
 });
-
-
 
 const pageUp = (char) => {  
   exec(`xdotool key Page_Up`, (err, stdout, stderr) => {
@@ -95,7 +91,6 @@ const pageDown = (char) => {
   });  
 }
 
-
 const typeText = (char) => {
   let cmd = 'type';
 
@@ -114,6 +109,22 @@ const typeText = (char) => {
       // node couldn't execute the command
       return;
     }      
+  });  
+}
+
+
+const getMousePosition = () => {
+  exec(`xdotool getmouselocation`, (err, stdout, stderr) => {
+    if (err) {
+      // node couldn't execute the command
+      return;
+    }      
+    const [xDot,yDot] = stdout.split(" ");
+    const [text1,x] = xDot.split(":");
+    const [text2,y] = yDot.split(":");
+    cursorPosX = parseInt(x);
+    cursorPosY = parseInt(y);
+    console.log(x, y);
   });  
 }
 
@@ -137,9 +148,7 @@ const moveDeltaXY = (deltaX, deltaY) => {
   if (cursorPosY < 0) {
     cursorPosY = 0;
   }
-
-  //console.log(cursorPosX, cursorPosY);
-  
+    
   exec(`xdotool mousemove ${cursorPosX} ${cursorPosY}`, (err, stdout, stderr) => {
     if (err) {
       // node couldn't execute the command
