@@ -137,9 +137,12 @@ const mouseClick = () => {
   });  
 }
 
+const scaleX = 1.6;
+const scaleY = 1.6;
+
 const moveDeltaXY = (deltaX, deltaY) => {
-  cursorPosX += parseFloat(deltaX);
-  cursorPosY += parseFloat(deltaY);
+  cursorPosX += parseFloat(deltaX) * scaleX;
+  cursorPosY += parseFloat(deltaY) * scaleY;
 
   if (cursorPosX < 0) {
     cursorPosX = 0;
